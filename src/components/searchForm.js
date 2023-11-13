@@ -1,9 +1,10 @@
+/* eslint-disable react/prop-types */
 import { useState, useRef } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import '../assets/styles/components/searchForm.css'
 
-const SearchForm = () => {
+const SearchForm = ({ movies }) => {
   const formRef = useRef(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [useCurrentLocation, setUseCurrentLocation] = useState(false)
@@ -93,9 +94,11 @@ const SearchForm = () => {
                         <label className='labelText'>¿Qué película quieres ver?</label>
                         <Field className='selectField' as="select" name="movie">
                             <option value="">Selecciona una película</option>
-                            <option value="toy story">Toy Story</option>
-                            <option value="buscando a nemo">Buscando a Nemo</option>
-                            <option value="cars">Cars</option>
+                            {movies.map((movie) => (
+                              <option key={movie} value={movie}>
+                                {movie}
+                              </option>
+                            ))}
                         </Field>
                         <ErrorMessage className='errorStyle' name="movie" component="div"/>
 
