@@ -99,7 +99,6 @@ const SearchForm = () => {
                         </Field>
                         <ErrorMessage className='errorStyle' name="movie" component="div"/>
 
-                        <br/>
                         <button className='submitButton' disabled={isSubmitting || isGettingLocation || !(isValid && dirty)} type="submit">
                           {isSubmitting ? 'Buscando...' : isGettingLocation ? 'Obteniendo ubicación...' : 'Buscar funciones'}
                         </button>
