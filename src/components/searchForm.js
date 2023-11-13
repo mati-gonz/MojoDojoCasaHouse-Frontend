@@ -42,6 +42,7 @@ const SearchForm = () => {
   }
 
   const searchValidationSchema = Yup.object().shape({
+    ubication: useCurrentLocation ? Yup.string() : Yup.string().required('Debes ingresar una ubicación'),
     movie: Yup.string().required('Debes elegir una película')
   })
 
