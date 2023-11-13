@@ -1,0 +1,81 @@
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 250px;
+  background-color: #4674eb;
+  color: #fff;
+  padding: 20px;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Agrega transiciones para 'transform', 'opacity', y 'visibility' */
+  transform: translateX(100%);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.menu-lateral h2 {
+  font-size: 2rem;
+  font-family: 'Cabin', sans-serif;
+  font-weight: 700;
+}
+
+.menu-lateral p {
+  font-size: 1.2rem;
+  font-family: 'Cabin', sans-serif;
+  font-weight: 400;
+}
+  
+.menu-lateral.visible {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.boton-ayuda-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.boton-ayuda {
+  font-size: 24px;
+  background-color: #4674eb;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.tooltip {
+  position: absolute;
+  top: 50%;
+  left: -160px; /* Ajusta esto según sea necesario para posicionar el tooltip al lado del botón */
+  transform: translateY(-50%); /* Esto centra el tooltip verticalmente */
+  background-color: #eff4fe;
+  color: #3155df;
+  padding: 0.7rem;
+  border-radius: 5px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.boton-ayuda-container:hover .tooltip,
+.tooltip.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.3rem;
+  cursor: pointer;
+  font-weight: bold;
+}
