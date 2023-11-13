@@ -1,0 +1,80 @@
+
+.formFields {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    row-gap: 1rem;
+}
+
+.submitButton {
+    border-radius: 5px;
+    padding: 1rem 2rem 1rem 2rem;
+    background-color: #6881ec;
+    width: 80%;
+    color: white;
+    cursor: pointer;
+    font-weight: 700;
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+    outline: none;
+    font-size: 1rem;
+    font-family: 'Heebo', sans-serif;
+    font-weight: 600;
+}
+
+.submitButton:hover {
+    background-color: #4c5cdf;
+}
+
+.submitButton:active {
+    background-color: #3d49c5;
+}
+
+.submitButton:disabled {
+    background-color: #c9dbfc;
+    color: #99bbf7;
+    cursor: not-allowed;
+}
+
+.labelText {
+    font-family: 'Heebo', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.inputField {
+    padding: 0.7rem 0.5rem 0.7rem 0.5rem;
+    border-radius: 5px;
+    border: 1px solid;
+    width: 90%;
+    font-size: 1rem;
+}
+
+.selectField {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    border-radius: 5px;
+    border: 1px solid;
+    width: 90%;
+    text-align: center;
+    cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.errorStyle {
+    color: #f43f5e;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.labelRadioText {
+    display: inline-block;
+    margin-right: 10px;
+}
+  
+.inputRadioField {
+    vertical-align: middle;
+}
