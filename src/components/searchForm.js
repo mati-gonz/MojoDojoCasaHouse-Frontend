@@ -3,6 +3,7 @@ import { useState, useRef } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import '../assets/styles/components/searchForm.css'
+import AutoCompleteField from './autocompleteField'
 
 const SearchForm = ({ movies }) => {
   const formRef = useRef(null)
@@ -38,12 +39,12 @@ const SearchForm = ({ movies }) => {
     } else {
       setFieldValue('currentLocation', false)
       setCoordinates('')
-      setFieldValue('ubication', '') // Restablece el valor de 'ubication' en el formulario
+      setFieldValue('location', '') // Restablece el valor de 'location' en el formulario
     }
   }
 
   const searchValidationSchema = Yup.object().shape({
-    ubication: useCurrentLocation ? Yup.string() : Yup.string().required('Debes ingresar una ubicación'),
+    location: useCurrentLocation ? Yup.string() : Yup.string().required('Debes ingresar una ubicación'),
     movie: Yup.string().required('Debes elegir una película')
   })
 
@@ -52,8 +53,8 @@ const SearchForm = ({ movies }) => {
 
     try {
       if (useCurrentLocation) {
-        values.ubication = coordinates
-      } else if (values.ubication === '') {
+        values.location = coordinates
+      } else if (values.location === '') {
         alert('Debes ingresar una ubicación')
         setIsSubmitting(false)
         return
@@ -71,15 +72,24 @@ const SearchForm = ({ movies }) => {
     <div>
         <div>
             <Formik
-                initialValues = {{ ubication: '', movie: '', currentLocation: false }}
+                initialValues = {{ location: '', movie: '', currentLocation: false }}
                 validationSchema = {searchValidationSchema}
                 onSubmit = {(values, { resetForm }) => sendForm(values, { resetForm })} >
                 {({ isValid, dirty, setFieldValue }) => (
                     <Form ref={formRef} className='formFields'>
 
                         <label className='labelText'>Ingresa una ubicación (Calle, número)</label>
-                        <Field className='inputField' type="input" name="ubication" disabled={useCurrentLocation} />
-                        <ErrorMessage className='errorStyle' name="ubication" component="div"/>
+                        <Field>
+                          {({ form }) => (
+                            <AutoCompleteField
+                              name="location"
+                              setFieldValue={form.setFieldValue}
+                              useCurrentLocation={useCurrentLocation}
+                            />
+                          )}
+                        </Field>
+
+                        <ErrorMessage className='errorStyle' name="location" component='div' />
 
                         <label>
                           <Field
