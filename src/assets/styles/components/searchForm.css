@@ -78,3 +78,22 @@
 .inputRadioField {
     vertical-align: middle;
 }
+
+.formDateWrapper {
+    width: 45%;
+}
+
+.formDate {
+    cursor: pointer;
+    padding: 0.7rem 0.5rem 0.7rem 0.5rem;
+    border-radius: 5px;
+    border: 1px solid;
+    width: 90%;
+    font-size: 1rem;
+    text-align: center;
+    position: inherit;
+}
+
+div.react-datepicker__input-container {
+    position: inherit;
+}

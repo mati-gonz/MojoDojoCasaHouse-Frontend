@@ -38,6 +38,8 @@ const HelpMenu = () => {
             <p>PelisCerca busca recomendarte los cines más cercanos para ver la película que quieras.</p>
             <p>1. Ingresa una dirección o utiliza tu ubicación actual para encontrar los cines más cercanos.</p>
             <p>2. Escoge la película que quieres ver dentro de las películas que hay actualmente en cartelera.</p>
+            <p>3. Elige el día que quieres ir al cine.</p>
+            <p>¡Y listo! Buscaremos los cines más cercanos que cumplan con lo que necesitas.</p>
         </div>
         <div className="boton-ayuda" onClick={toggleMenu} onMouseEnter={showTooltip}>
   ?

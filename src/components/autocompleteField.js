@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react'
 import '../assets/styles/components/searchForm.css'
 
 // eslint-disable-next-line react/prop-types
-const AutoCompleteField = ({ name, useCurrentLocation, setFieldValue }) => {
+const AutoCompleteField = ({ name, onChange, onBlur, useCurrentLocation, setFieldValue }) => {
   const autoCompleteRef = useRef()
   const inputRef = useRef()
   const options = {
@@ -24,7 +24,15 @@ const AutoCompleteField = ({ name, useCurrentLocation, setFieldValue }) => {
     }
   }, [inputRef.current])
   return (
-    <input name={name} disabled={useCurrentLocation} ref={inputRef} className='inputField'/>
+    <input
+    name={name}
+    onChange={onChange}
+    onBlur={onBlur}
+    disabled={useCurrentLocation}
+    ref={inputRef}
+    className='inputField'
+    placeholder='Ingresa una ubicación'
+    />
   )
 }
 export default AutoCompleteField
