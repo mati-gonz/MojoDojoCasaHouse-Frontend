@@ -1,30 +1,30 @@
-import { useEffect, useState } from "react";
-import "../assets/styles/views/landing.css";
-import dataTable from "../components/dataTable";
-import axios from "axios";
+// import { useEffect, useState } from 'react'
+import '../assets/styles/views/landing.css'
+import DataTable from '../components/dataTable'
+// import axios from 'axios'
 
 const AdminView = () => {
-  const [cinemas, setCinemas] = useState([]);
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  // const [cinemas, setCinemas] = useState([])
+  // const backendUrl = process.env.REACT_APP_BACKEND_URL
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`${backendUrl}/cinemas`);
-        setCinemas(response.data);
-      } catch (error) {
-        console.error("Error al obtener los cines", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(`${backendUrl}/cinemas`)
+  //       setCinemas(response.data)
+  //     } catch (error) {
+  //       console.error('Error al obtener los cines', error)
+  //     }
+  //   }
 
-    fetchData();
-  }, []);
+  //   fetchData()
+  // }, [])
 
   return (
     <div className="landingLayout">
-      <dataTable />
+      <DataTable />
     </div>
-  );
-};
+  )
+}
 
-export default AdminView;
+export default AdminView
