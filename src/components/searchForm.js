@@ -66,7 +66,7 @@ const SearchForm = ({ movies }) => {
         setIsSubmitting(false)
         return
       }
-      console.log(values)
+
       const response = await axios.post(`${backendUrl}/search`, values)
       console.log(response.data)
 
