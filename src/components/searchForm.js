@@ -1,14 +1,22 @@
+/* eslint-disable react/prop-types */
 import { useState, useRef } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
+import DatePicker, { registerLocale } from 'react-datepicker'
+import axios from 'axios'
 import '../assets/styles/components/searchForm.css'
+import 'react-datepicker/dist/react-datepicker.css'
+import AutoCompleteField from './autocompleteField'
+import es from 'date-fns/locale/es'
 
-const SearchForm = () => {
+const SearchForm = ({ movies }) => {
   const formRef = useRef(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [useCurrentLocation, setUseCurrentLocation] = useState(false)
   const [coordinates, setCoordinates] = useState('')
   const [isGettingLocation, setIsGettingLocation] = useState(false)
+  registerLocale('es', es)
+  const backendUrl = process.env.REACT_APP_BACKEND_URL
 
   function success (position) {
     const latitude = position.coords.latitude
@@ -37,32 +45,37 @@ const SearchForm = () => {
     } else {
       setFieldValue('currentLocation', false)
       setCoordinates('')
-      setFieldValue('ubication', '') // Restablece el valor de 'ubication' en el formulario
+      setFieldValue('location', '') // Restablece el valor de 'location' en el formulario
     }
   }
 
   const searchValidationSchema = Yup.object().shape({
-    ubication: useCurrentLocation ? Yup.string() : Yup.string().required('Debes ingresar una ubicación'),
+    location: useCurrentLocation ? Yup.string() : Yup.string().required('Debes ingresar una ubicación'),
+    date: Yup.date().required('Debes ingresar una fecha'),
     movie: Yup.string().required('Debes elegir una película')
   })
 
-  const sendForm = (values, { resetForm }) => {
+  const sendForm = async (values, { resetForm }) => {
     setIsSubmitting(true)
 
     try {
       if (useCurrentLocation) {
-        values.ubication = coordinates
-      } else if (values.ubication === '') {
+        values.location = coordinates
+      } else if (values.location === '') {
         alert('Debes ingresar una ubicación')
         setIsSubmitting(false)
         return
       }
-      console.log(values)
+
+      const response = await axios.post(`${backendUrl}/search`, values)
+      console.log(response.data)
+
       setIsSubmitting(false)
       resetForm()
     } catch (error) {
       setIsSubmitting(false)
-      alert('Ocurrió un error al buscar funciones')
+      alert('Ocurrió un error al enviar el formulario')
+      console.error(error)
     }
   }
 
@@ -70,15 +83,23 @@ const SearchForm = () => {
     <div>
         <div>
             <Formik
-                initialValues = {{ ubication: '', movie: '', currentLocation: false }}
+                initialValues = {{ location: '', movie: '', date: null, currentLocation: false }}
                 validationSchema = {searchValidationSchema}
                 onSubmit = {(values, { resetForm }) => sendForm(values, { resetForm })} >
                 {({ isValid, dirty, setFieldValue }) => (
                     <Form ref={formRef} className='formFields'>
 
                         <label className='labelText'>Ingresa una ubicación (Calle, número)</label>
-                        <Field className='inputField' type="input" name="ubication" disabled={useCurrentLocation} />
-                        <ErrorMessage className='errorStyle' name="ubication" component="div"/>
+                        <Field name="location">
+                          {({ field, form }) => (
+                            <AutoCompleteField
+                              {...field}
+                              setFieldValue={form.setFieldValue}
+                              useCurrentLocation={useCurrentLocation}
+                            />
+                          )}
+                        </Field>
+                        <ErrorMessage className='errorStyle' name="location" component='div' />
 
                         <label>
                           <Field
@@ -93,11 +114,37 @@ const SearchForm = () => {
                         <label className='labelText'>¿Qué película quieres ver?</label>
                         <Field className='selectField' as="select" name="movie">
                             <option value="">Selecciona una película</option>
-                            <option value="toy story">Toy Story</option>
-                            <option value="buscando a nemo">Buscando a Nemo</option>
-                            <option value="cars">Cars</option>
+                            {movies.map((movie) => (
+                              <option key={movie} value={movie}>
+                                {movie}
+                              </option>
+                            ))}
                         </Field>
                         <ErrorMessage className='errorStyle' name="movie" component="div"/>
+
+                        <label className='labelText' >¿Cuándo quieres ir?</label>
+                                <Field name="date" >
+                                    {({ form, field }) => {
+                                      const { setFieldValue } = form
+                                      const { value } = field
+                                      return (
+                                            <DatePicker
+                                                {...field}
+                                                id={ 'date' }
+                                                selected={value}
+                                                onChange={val => setFieldValue('date', val)}
+                                                minDate={new Date()}
+                                                dateFormat='dd/MM/yyyy'
+                                                showPopperArrow={false}
+                                                wrapperClassName="formDateWrapper"
+                                                className="formDate"
+                                                locale={'es'}
+                                                autoComplete='off' />
+
+                                      )
+                                    }}
+                                </Field>
+                                <ErrorMessage className='errorStyle' name="date" component='div' />
 
                         <button className='submitButton' disabled={isSubmitting || isGettingLocation || !(isValid && dirty)} type="submit">
                           {isSubmitting ? 'Buscando...' : isGettingLocation ? 'Obteniendo ubicación...' : 'Buscar funciones'}
