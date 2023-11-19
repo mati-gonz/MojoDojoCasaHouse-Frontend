@@ -19,7 +19,7 @@ const NearbyCinemas = () => {
       {postResponse
         ? (
         <div className="mapContainer">
-          <CinemasMap center={center} cinemasLocations={postResponse} />
+          <CinemasMap center={center} movieInfo={postResponse} />
         </div>
           )
         : (

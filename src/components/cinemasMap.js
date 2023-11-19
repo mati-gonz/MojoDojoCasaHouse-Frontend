@@ -1,9 +1,22 @@
-import { GoogleMap, Marker, Circle } from '@react-google-maps/api'
+import { GoogleMap, MarkerF, InfoWindowF } from '@react-google-maps/api'
 import '../assets/styles/components/cinemasMap.css'
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
-const CinemasMap = ({ center, cinemasLocations }) => {
+const CinemasMap = ({ center, movieInfo }) => {
+  const cinemasLocations = movieInfo[0]
+  const movieName = movieInfo[1]
+
   const navigate = useNavigate()
+  const [locationsReady, setLocationsReady] = useState(false)
+  const [selectedCinema, setSelectedCinema] = useState(null)
+
+  useEffect(() => {
+    if (cinemasLocations && cinemasLocations.length > 0) {
+      setLocationsReady(true)
+    }
+  }, [cinemasLocations])
+
   const color = {
     'google-blue 100': '#4285F4',
     'white 100': 'rgb(255,255,255)',
@@ -21,43 +34,57 @@ const CinemasMap = ({ center, cinemasLocations }) => {
   }
 
   const handleMarkerClick = (cinema) => {
-    navigate(`/cinemas/${cinema.id}`) // TODO: Esto es de mentira hay que ponerlo bien después
+    navigate(`/cinema/${cinema.id}`, { state: { movie: movieName } }) // TODO: Esto es de mentira hay que ponerlo bien después
+  }
+
+  const handleMarkerOver = (cinema) => {
+    setSelectedCinema(cinema)
+  }
+
+  const handleMarkerOut = () => {
+    setSelectedCinema(null)
   }
 
   return (
     <div>
-      <GoogleMap
-        mapContainerClassName='mapClass'
-        zoom={14}
-        center={center}
+      {locationsReady
+        ? (
+        <GoogleMap
+          mapContainerClassName='mapClass'
+          zoom={13}
+          center={center}
         >
           {cinemasLocations.map((cinema) => (
-            <Marker
+            <MarkerF
               key={cinema.id}
-              onClick={handleMarkerClick}
-              onMouseOver={(cinema) => console.log(cinema.name)}
+              onClick={() => handleMarkerClick(cinema)}
+              onMouseOver={() => handleMarkerOver(cinema)}
               animation={window.google.maps.Animation.DROP}
               position={{
                 lat: cinema.location.coordinates[0],
                 lng: cinema.location.coordinates[1]
               }}
             />
-          ))
-          }
-          <Marker position={center} icon={blueDot} />
-          <Circle
-            center={center}
-            radius={20} // Radio en metros
-            options={{
-              strokeColor: color['google-blue-light 100'], // Color del borde del círculo (azul)
-              strokeOpacity: 0.4,
-              strokeWeight: 1,
-              fillColor: color['google-blue-dark 100'], // Color de relleno del círculo (azul)
-              fillOpacity: 0.4,
-              zIndex: 1
-            }}
-          />
-      </GoogleMap>
+          ))}
+          {selectedCinema && (
+            <InfoWindowF
+              position={{
+                lat: selectedCinema.location.coordinates[0],
+                lng: selectedCinema.location.coordinates[1]
+              }}
+              onCloseClick={() => handleMarkerOut()}
+            >
+              <div>
+                <h4>{selectedCinema.name}</h4>
+              </div>
+            </InfoWindowF>
+          )}
+          <MarkerF position={center} icon={blueDot} />
+        </GoogleMap>
+          )
+        : (
+        <p>Loading...</p>
+          )}
     </div>
   )
 }
