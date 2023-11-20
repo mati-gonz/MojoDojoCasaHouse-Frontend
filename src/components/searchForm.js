@@ -8,6 +8,7 @@ import '../assets/styles/components/searchForm.css'
 import 'react-datepicker/dist/react-datepicker.css'
 import AutoCompleteField from './autocompleteField'
 import es from 'date-fns/locale/es'
+import { useNavigate } from 'react-router-dom'
 
 const SearchForm = ({ movies }) => {
   const formRef = useRef(null)
@@ -17,6 +18,7 @@ const SearchForm = ({ movies }) => {
   const [isGettingLocation, setIsGettingLocation] = useState(false)
   registerLocale('es', es)
   const backendUrl = process.env.REACT_APP_BACKEND_URL
+  const navigate = useNavigate()
 
   function success (position) {
     const latitude = position.coords.latitude
@@ -69,6 +71,8 @@ const SearchForm = ({ movies }) => {
 
       const response = await axios.post(`${backendUrl}/search`, values)
       console.log(response.data)
+
+      navigate('/nearbyCinemas', { state: { postResponse: response.data, currentLocation: values.location } })
 
       setIsSubmitting(false)
       resetForm()
