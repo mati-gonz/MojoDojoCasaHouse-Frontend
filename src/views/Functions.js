@@ -119,19 +119,19 @@ const Functions = () => {
     fetchData()
   }, [])
 
-  const getNombreDia = (fecha) => {
-    const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado']
-    return dias[fecha.getDay()]
+  const getNameDay = (day) => {
+    const days = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado']
+    return days[day.getDay()]
   }
 
-  const getNumeroDia = (fecha) => fecha.getDate()
+  const getNumberDay = (day) => day.getDate()
 
-  const getMes = (fecha) => {
-    const meses = [
+  const getMonth = (month) => {
+    const months = [
       'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
       'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
     ]
-    return meses[fecha.getMonth()]
+    return months[month.getMonth()]
   }
 
   const [selectedDay, setSelectedDay] = useState(null)
@@ -167,8 +167,8 @@ const Functions = () => {
               className={`day ${selectedDay && dia.getTime() === selectedDay.getTime() ? 'selectedText' : ''}`}
               onClick={() => setSelectedDay(dia)}
             >
-                {getNombreDia(dia)}<br />
-                {getNumeroDia(dia)} de {getMes(dia)}
+                {getNameDay(dia)}<br />
+                {getNumberDay(dia)} de {getMonth(dia)}
             </span>
           ))}
         </div>
