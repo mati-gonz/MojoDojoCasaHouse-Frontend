@@ -72,6 +72,7 @@ const CinemasMap = ({ center, movieInfo }) => {
                 lat: selectedCinema.location.coordinates[0],
                 lng: selectedCinema.location.coordinates[1]
               }}
+              options={{ pixelOffset: new window.google.maps.Size(0, -30) }} // Desplaza la ventana de información 30 píxeles hacia arriba
               onCloseClick={() => handleMarkerOut()}
             >
               <div>

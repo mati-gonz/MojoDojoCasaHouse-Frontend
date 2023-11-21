@@ -1,5 +1,6 @@
 import { useLocation } from 'react-router-dom'
 import CinemasMap from '../components/cinemasMap'
+import SideBarInfo from '../components/sideBarInfo'
 import '../assets/styles/views/nearbyCinemas.css'
 
 const NearbyCinemas = () => {
@@ -18,13 +19,12 @@ const NearbyCinemas = () => {
     <div className='nearbyLayout'>
       {postResponse
         ? (
-        <div className="mapContainer">
           <CinemasMap center={center} movieInfo={postResponse} />
-        </div>
           )
         : (
         <p>Loading...</p>
           )}
+      <SideBarInfo postInfo={postResponse} />
     </div>
   )
 }
