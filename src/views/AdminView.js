@@ -48,6 +48,14 @@ const AdminView = () => {
     fetchData()
   }, [])
 
+  const handleScrapeButtonClick = async () => {
+    try {
+      await axios.post(`${backendUrl}/api/scrape`)
+    } catch (error) {
+      alert('Error al correr el scraper')
+    }
+  }
+
   const clickCinemaButton = () => {
     setState(true)
   }
@@ -75,7 +83,7 @@ const AdminView = () => {
       <div className='databaseButtonContainer'>
         <button className='databaseButton' onClick={(e) => { clickCinemaButton() }}>cinema</button>
         <button className='databaseButton' onClick={(e) => { clickShowButton() }}>show</button>
-        <button id='scraperButton' className='databaseButton'>Correr Scrapper</button>
+        <button id='scraperButton' className='databaseButton' onClick={handleScrapeButtonClick} >Correr Scrapper</button>
       </div>
       <div id="cinema">
         {state
