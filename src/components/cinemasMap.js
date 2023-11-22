@@ -104,7 +104,7 @@ const CinemasMap = ({ center, movieInfo, clickedCinema, onClickedCinema }) => {
               options={{
                 icon: {
                   path: window.google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-                  fillColor: clickedCinema && clickedCinema.id === cinema.id ? 'green' : 'red',
+                  fillColor: clickedCinema && clickedCinema.id === cinema.id ? '#5bb200' : '#e51d27',
                   fillOpacity: 1,
                   scale: 9,
                   strokeColor: color['white 100'],
