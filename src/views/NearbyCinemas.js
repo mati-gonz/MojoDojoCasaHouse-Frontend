@@ -7,7 +7,7 @@ import '../assets/styles/views/nearbyCinemas.css'
 const NearbyCinemas = () => {
   const [clickedCinema, setClickedCinema] = useState(null)
   const location = useLocation()
-  const { postResponse, currentLocation } = location.state || {}
+  const { postResponse, currentLocation, movieDate } = location.state || {}
   const splitLocation = currentLocation.split(',')
   const userLat = parseFloat(splitLocation[0].replace('Latitude: ', ''))
   const userLong = parseFloat(splitLocation[1].replace('Longitude: ', ''))
@@ -31,7 +31,7 @@ const NearbyCinemas = () => {
           )}
       {postResponse[0].length > 0
         ? (
-          <SideBarInfo postInfo={postResponse} onClickedCinema={setClickedCinema} />
+          <SideBarInfo postInfo={postResponse} clickedCinema={clickedCinema} onClickedCinema={setClickedCinema} dateOfMovie={movieDate} />
           )
         : (
             null
