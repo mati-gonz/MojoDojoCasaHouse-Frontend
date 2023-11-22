@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import Landing from './views/Landing'
 import NearbyCinemas from './views/NearbyCinemas'
 import AdminView from './views/AdminView'
+import Functions from './views/Functions'
 
 export default function RoutesFunction () {
   return (
@@ -9,8 +10,9 @@ export default function RoutesFunction () {
         <Route exact path="/" element={<Landing />} />
         <Route path='/nearbyCinemas' element={<NearbyCinemas />} />
         <Route path="*" element={<h1>Not Found</h1>} />
+        <Route exact path="/movieInfo" element={<Functions/>}/>
         <Route exact path="/admin" element={<AdminView />} />
-      </Routes>
+     </Routes>
 
   )
 }
