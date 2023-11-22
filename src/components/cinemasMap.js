@@ -1,13 +1,9 @@
 import { GoogleMap, MarkerF, InfoWindowF } from '@react-google-maps/api'
 import '../assets/styles/components/cinemasMap.css'
-// import { useNavigate } from 'react-router-dom'
 import { useEffect, useState, useCallback, useRef } from 'react'
 
 const CinemasMap = ({ center, movieInfo, clickedCinema, onClickedCinema }) => {
   const cinemasLocations = movieInfo[0]
-  // const movieName = movieInfo[1]
-
-  // const navigate = useNavigate()
   const [locationsReady, setLocationsReady] = useState(false)
   const [selectedCinema, setSelectedCinema] = useState(null)
   const [shouldStopAnimation, setShouldStopAnimation] = useState(false)
