@@ -76,11 +76,11 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie }) 
                 <h3>{clickedCinema.name}</h3>
                 <img className='moviePicture' src={`${cinemaData.shows[0].link_to_picture}`} />
                 <h4>Horarios para el día {parsedDate}</h4>
+                <ul className='showInfo'>
                 {cinemaData.shows.map((show, index) => (
-                  <div className='showInfo' key={index}>
-                    <p>{show.schedule}</p>
-                  </div>
+                  <li key={index}>{show.schedule}</li>
                 ))}
+                </ul>
                 <div className='buttonsContainer'>
                   <button className='moreInformationButton'>Más información</button>
                   <button className='backButton' onClick={() => onClickedCinema(null)}>Volver</button>
