@@ -134,7 +134,7 @@ const Functions = () => {
   }
 
   const [selectedDay, setSelectedDay] = useState(null)
-  const diasUnicos = Array.from(
+  const uniqueDays = Array.from(
     new Set(shows.map(show => new Date(show.schedule).setHours(0, 0, 0, 0)))
   ).map(timestamp => new Date(timestamp))
 
@@ -161,7 +161,7 @@ const Functions = () => {
               )}
         <div className='tableContainer'>
           <div className='daysContainer'>
-            {diasUnicos.map((dia, index) => (
+            {uniqueDays.map((dia, index) => (
               <span
                 key={index}
                 className={`day ${selectedDay && dia.getTime() === selectedDay.getTime() ? 'selectedText' : ''}`}

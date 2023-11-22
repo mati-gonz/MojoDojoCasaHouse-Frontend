@@ -59,7 +59,8 @@
     flex-direction: column;
     width: 100%;
     height: 100%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    border-radius: 0.25rem;
 }
 
 .daysContainer {
@@ -122,7 +123,7 @@
     width: 10vw;
     background-color: white;
     color: #2441d1;
-    border-radius: 1.5rem; /* 24px */
+    border-radius: 1.5rem;
     cursor: pointer;
     font-size: 1.1rem;
     font-family: 'Heebo', sans-serif;
@@ -141,7 +142,7 @@
 
 .backButton {
     background-color: #eff4fe;
-    border-radius: 1.5rem; /* 24px */
+    border-radius: 1.5rem;
     cursor: pointer;
     font-size: 1.2rem;
     font-family: 'Heebo', sans-serif;
@@ -150,6 +151,7 @@
     align-self: flex-start;
     font-weight: bold;
     padding: 1% 2% 1% 2%;
+    align-self: center;
 }
 
 .backButton:hover {
