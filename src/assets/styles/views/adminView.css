@@ -1,0 +1,55 @@
+.landingLayout
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.databaseButtonContainer
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 10%;
+    height: 100%;
+    background-color: #6881ec;
+}
+
+#cinema
+{
+    width: 90%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.databaseButton
+{
+    border-radius: 5px;
+    padding: 1rem 2rem 1rem 2rem;
+    background-color: #6881ec;
+    width: 100%;
+    color: white;
+    cursor: pointer;
+    font-weight: 700;
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+    outline: none;
+    font-size: 1rem;
+    font-family: 'Heebo', sans-serif;
+    font-weight: 600;
+}
+
+.databaseButton:hover
+{
+    color: #192152;
+}
+
+.DataTable
+{
+    height: 90%;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
