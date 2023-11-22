@@ -22,6 +22,7 @@
     font-size: 1rem;
     font-family: 'Heebo', sans-serif;
     font-weight: 600;
+    max-width: 50%;
 }
 
 .submitButton:hover {
@@ -50,6 +51,7 @@
     border: 1px solid;
     width: 90%;
     font-size: 1rem;
+    max-width: 60%;
 }
 
 .selectField {
@@ -62,6 +64,7 @@
     font-family: 'Heebo', sans-serif;
     font-size: 1rem;
     font-weight: 500;
+    max-width: 60%;
 }
 
 .errorStyle {

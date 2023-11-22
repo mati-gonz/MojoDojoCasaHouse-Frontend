@@ -70,9 +70,8 @@ const SearchForm = ({ movies }) => {
       }
 
       const response = await axios.post(`${backendUrl}/search`, values)
-      console.log(response.data)
 
-      navigate('/nearbyCinemas', { state: { postResponse: response.data, currentLocation: values.location } })
+      navigate('/nearbyCinemas', { state: { postResponse: response.data, currentLocation: values.location, movieDate: values.date } })
 
       setIsSubmitting(false)
       resetForm()
