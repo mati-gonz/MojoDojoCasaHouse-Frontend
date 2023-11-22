@@ -6,7 +6,7 @@ export default function RoutesFunction () {
   return (
       <Routes>
         <Route exact path="/" element={<Landing />} />
-        <Route exact path="/functions" element={<Functions/>}/>
+        <Route exact path="/movieInfo" element={<Functions/>}/>
       </Routes>
   )
 }

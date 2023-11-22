@@ -14,11 +14,10 @@ const Functions = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const response = await axios.post('/movieInfo', {
-        //   cinema_id: cinemaId,
-        //   movie_title: movieName
-        // });
-        const response = await axios.post('/movieInfo')
+        const response = await axios.post('/movieInfo', {
+          // cinema_id: cinemaId,
+          // movie_title: movieName
+        })
 
         setShows(response.data.shows)
         setCinema(response.data.cinema)
@@ -120,7 +119,7 @@ const Functions = () => {
   }, [])
 
   const getNameDay = (day) => {
-    const days = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado']
+    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
     return days[day.getDay()]
   }
 
@@ -144,7 +143,7 @@ const Functions = () => {
       {shows.length > 0
         ? (
         <div className='movieInformation'>
-          <p className='movieTitle'>{shows[0].title}</p>
+          <h1>{shows[0].title}</h1>
           <img src={shows[0].link_to_picture} alt={`Image for ${shows[0].title}`} className='frontPageMovie'/>
         </div>
           )
@@ -155,36 +154,41 @@ const Functions = () => {
         <div className='functionsInformation'>
           {cinema.length > 0
             ? (
-            <p className='cinemaInformation'>{cinema[0].name}</p>
+            <h1>{cinema[0].name}</h1>
               )
             : (
             <p></p>
               )}
-        <div className='daysContainer'>
-          {diasUnicos.map((dia, index) => (
-            <span
-              key={index}
-              className={`day ${selectedDay && dia.getTime() === selectedDay.getTime() ? 'selectedText' : ''}`}
-              onClick={() => setSelectedDay(dia)}
-            >
-                {getNameDay(dia)}<br />
-                {getNumberDay(dia)} de {getMonth(dia)}
-            </span>
-          ))}
+        <div className='tableContainer'>
+          <div className='daysContainer'>
+            {diasUnicos.map((dia, index) => (
+              <span
+                key={index}
+                className={`day ${selectedDay && dia.getTime() === selectedDay.getTime() ? 'selectedText' : ''}`}
+                onClick={() => setSelectedDay(dia)}
+              >
+                  {getNameDay(dia)}<br />
+                  {getNumberDay(dia)} de {getMonth(dia)}
+              </span>
+            ))}
+          </div>
+          <div className='functionsContainer'>
+          {shows
+            .filter(show => {
+              const showDate = new Date(show.schedule)
+              return selectedDay && showDate.toLocaleDateString() === selectedDay.toLocaleDateString()
+            })
+            .map((show, index) => (
+              <div className='function' key={index}>
+                <p className='hour'>{new Date(show.schedule).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} hrs.</p>
+                <button className="buyButton" onClick={() => window.open(show.link_to_show, '_blank')}>Comprar</button>
+              </div>
+            ))}
+          </div>
         </div>
-        {shows
-          .filter(show => {
-            const showDate = new Date(show.schedule)
-            return selectedDay && showDate.toLocaleDateString() === selectedDay.toLocaleDateString()
-          })
-          .map((show, index) => (
-            <div className='function' key={index}>
-              <p className='hour'>{new Date(show.schedule).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} hrs.</p>
-              <button className="buyButton" onClick={() => window.open(show.link_to_show, '_blank')}>Comprar</button>
-            </div>
-          ))}
+        <br/>
           <button className='backButton'>
-            Go Back
+            Volver
           </button>
         </div>
     </div>
