@@ -75,7 +75,8 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, cu
 
   return (
     <div className='sideBarContainer'>
-      <h2>Cines Disponibles para ver: {movieName}</h2>
+      <h2>Cines Disponibles para ver:</h2>
+      <h3>{movieName}</h3>
       {clickedCinema
         ? (
             cinemaData
