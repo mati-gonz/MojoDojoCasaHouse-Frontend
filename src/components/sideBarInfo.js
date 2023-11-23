@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import '../assets/styles/components/sideBarInfo.css'
+import { useNavigate } from 'react-router-dom'
+import Spinner from './spinner'
 
-const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie }) => {
+const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, currentLocation }) => {
   const movieName = postInfo[1]
   const [addresses, setAddresses] = useState([])
   const avalibleCinemas = postInfo[0]
@@ -10,6 +12,8 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie }) 
   const geocoder = new window.google.maps.Geocoder()
   const movieDate = new Date(dateOfMovie)
   const parsedDate = `${movieDate.getDate()}/${movieDate.getMonth()}/${movieDate.getFullYear()}`
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     Promise.all(
@@ -57,17 +61,22 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie }) 
     )
   }
 
-  function Spinner () {
-    return (
-      <div className="spinner-container">
-        <div className="spinner"></div>
-      </div>
-    )
+  const handleMoreInformationClick = () => {
+    navigate('/movieInfo', {
+      state: {
+        cinemaId: cinemaData.cinema.id,
+        movieTitle: movieName,
+        movieDate: dateOfMovie,
+        currentLocation,
+        postInfo
+      }
+    })
   }
 
   return (
     <div className='sideBarContainer'>
-      <h2>Cines Disponibles para ver: {movieName}</h2>
+      <h2>Cines Disponibles para ver:</h2>
+      <h3>{movieName}</h3>
       {clickedCinema
         ? (
             cinemaData
@@ -82,12 +91,12 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie }) 
                 ))}
                 </ul>
                 <div className='buttonsContainer'>
-                  <button className='moreInformationButton'>Más información</button>
+                  <button className='moreInformationButton' onClick={handleMoreInformationClick}>Más información</button>
                   <button className='backButton' onClick={() => onClickedCinema(null)}>Volver</button>
                 </div>
               </div>
                 )
-              : <Spinner />
+              : <Spinner small={false} />
           )
         : (
           <div className='labelsContainer'>

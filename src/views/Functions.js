@@ -1,118 +1,28 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-// import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import '../assets/styles/views/functions.css'
+import Spinner from '../components/spinner'
 
 const Functions = () => {
   const [shows, setShows] = useState([])
   const [cinema, setCinema] = useState([])
-
-  // const location = useLocation();
-  // const cinemaId = location.state?.cinema.id; // Accede a cinema.id desde state
-  // const movieName = location.state?.movie;
+  const backendUrl = process.env.REACT_APP_BACKEND_URL
+  const location = useLocation()
+  const { cinemaId, movieTitle, movieDate, currentLocation, postInfo } = location.state
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post('/movieInfo', {
-          // cinema_id: cinemaId,
-          // movie_title: movieName
+        const response = await axios.post(`${backendUrl}/movieInfo`, {
+          cinema_id: cinemaId,
+          movie_title: movieTitle
         })
-
         setShows(response.data.shows)
         setCinema(response.data.cinema)
       } catch (error) {
         console.error('Error al obtener las funciones', error)
-      } finally {
-        const mockShowData = [
-          {
-            title: 'Barbie',
-            schedule: '2023-11-17T11:00:00',
-            link_to_show: 'https://www.cinemark.cl/pelicula?tag=512&corporate_film_id=95303&coming_soon=false&pelicula=jdh-balada-de-pajaros-cantores&cine=cinemark_alto_las_condes',
-            link_to_picture: 'https://m.media-amazon.com/images/M/MV5BNjU3N2QxNzYtMjk1NC00MTc4LTk1NTQtMmUxNTljM2I0NDA5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg',
-            id_cinema: 1,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            title: 'Barbie',
-            schedule: '2023-11-17T12:00:00',
-            link_to_show: 'https://www.cinemark.cl/pelicula?tag=512&corporate_film_id=95303&coming_soon=false&pelicula=jdh-balada-de-pajaros-cantores&cine=cinemark_alto_las_condes',
-            link_to_picture: 'https://m.media-amazon.com/images/M/MV5BNjU3N2QxNzYtMjk1NC00MTc4LTk1NTQtMmUxNTljM2I0NDA5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg',
-            id_cinema: 1,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            title: 'Barbie',
-            schedule: '2023-11-17T15:00:00',
-            link_to_show: 'https://www.cinemark.cl/pelicula?tag=512&corporate_film_id=95303&coming_soon=false&pelicula=jdh-balada-de-pajaros-cantores&cine=cinemark_alto_las_condes',
-            link_to_picture: 'https://m.media-amazon.com/images/M/MV5BNjU3N2QxNzYtMjk1NC00MTc4LTk1NTQtMmUxNTljM2I0NDA5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg',
-            id_cinema: 1,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            title: 'Barbie',
-            schedule: '2023-11-18T11:00:00',
-            link_to_show: 'https://www.cinemark.cl/pelicula?tag=512&corporate_film_id=95303&coming_soon=false&pelicula=jdh-balada-de-pajaros-cantores&cine=cinemark_alto_las_condes',
-            link_to_picture: 'https://m.media-amazon.com/images/M/MV5BNjU3N2QxNzYtMjk1NC00MTc4LTk1NTQtMmUxNTljM2I0NDA5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg',
-            id_cinema: 1,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            title: 'Barbie',
-            schedule: '2023-11-19T11:00:00',
-            link_to_show: 'https://www.cinemark.cl/pelicula?tag=512&corporate_film_id=95303&coming_soon=false&pelicula=jdh-balada-de-pajaros-cantores&cine=cinemark_alto_las_condes',
-            link_to_picture: 'https://m.media-amazon.com/images/M/MV5BNjU3N2QxNzYtMjk1NC00MTc4LTk1NTQtMmUxNTljM2I0NDA5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg',
-            id_cinema: 1,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            title: 'Barbie',
-            schedule: '2023-11-19T15:00:00',
-            link_to_show: 'https://www.cinemark.cl/pelicula?tag=512&corporate_film_id=95303&coming_soon=false&pelicula=jdh-balada-de-pajaros-cantores&cine=cinemark_alto_las_condes',
-            link_to_picture: 'https://m.media-amazon.com/images/M/MV5BNjU3N2QxNzYtMjk1NC00MTc4LTk1NTQtMmUxNTljM2I0NDA5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg',
-            id_cinema: 1,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            title: 'Barbie',
-            schedule: '2023-11-17T16:00:00',
-            link_to_show: 'https://www.cinemark.cl/pelicula?tag=512&corporate_film_id=95303&coming_soon=false&pelicula=jdh-balada-de-pajaros-cantores&cine=cinemark_alto_las_condes',
-            link_to_picture: 'https://m.media-amazon.com/images/M/MV5BNjU3N2QxNzYtMjk1NC00MTc4LTk1NTQtMmUxNTljM2I0NDA5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg',
-            id_cinema: 1,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          },
-          {
-            title: 'Barbie',
-            schedule: '2023-11-17T17:00:00',
-            link_to_show: 'https://www.cinemark.cl/pelicula?tag=512&corporate_film_id=95303&coming_soon=false&pelicula=jdh-balada-de-pajaros-cantores&cine=cinemark_alto_las_condes',
-            link_to_picture: 'https://m.media-amazon.com/images/M/MV5BNjU3N2QxNzYtMjk1NC00MTc4LTk1NTQtMmUxNTljM2I0NDA5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_.jpg',
-            id_cinema: 1,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          }
-        ]
-
-        setShows(mockShowData)
-
-        const mockCinemaData = [
-          {
-            name: 'Cinemark Alto Las Condes',
-            location: {
-              type: 'Point',
-              coordinates: [-33.3911981, -70.5475219]
-            },
-            createdAt: new Date(),
-            updatedAt: new Date()
-          }
-        ]
-        setCinema(mockCinemaData)
       }
     }
     fetchData()
@@ -134,64 +44,82 @@ const Functions = () => {
   }
 
   const [selectedDay, setSelectedDay] = useState(null)
-  const diasUnicos = Array.from(
-    new Set(shows.map(show => new Date(show.schedule).setHours(0, 0, 0, 0)))
+
+  const uniqueDays = Array.from(
+    new Set(shows.map(show => new Date(show.date).setHours(0, 0, 0, 0)))
   ).map(timestamp => new Date(timestamp))
+
+  if (selectedDay === null && uniqueDays.length > 0) {
+    setSelectedDay(uniqueDays[0])
+  }
+
+  const handleBackButton = () => {
+    navigate('/nearbyCinemas', {
+      state: {
+        postResponse: postInfo,
+        currentLocation,
+        movieDate
+      }
+    })
+  }
 
   return (
     <div className='functionsLayout'>
       {shows.length > 0
         ? (
-        <div className='movieInformation'>
+        <><div className='movieInformation'>
           <h1>{shows[0].title}</h1>
-          <img src={shows[0].link_to_picture} alt={`Image for ${shows[0].title}`} className='frontPageMovie'/>
-        </div>
+          <img src={shows[0].link_to_picture} alt={`Image for ${shows[0].title}`} className='frontPageMovie' />
+        </div><div className='otherInformation'>
+            <div className='functionsInformation'>
+                <h1>{cinema.name}</h1>
+              <div className='tableContainer'>
+                <div className='daysContainer'>
+                  {uniqueDays.map((dia, index) => (
+                    <span
+                      key={index}
+                      className={`day ${selectedDay && dia.getTime() === selectedDay.getTime() ? 'selectedText' : ''}`}
+                      onClick={() => setSelectedDay(dia)}
+                    >
+                      {getNameDay(dia)}<br />
+                      {getNumberDay(dia)} de {getMonth(dia)}
+                    </span>
+                  ))}
+                </div>
+                <div className='functionsContainer'>
+                  {shows
+                    .filter(show => {
+                      const showDate = new Date(show.date)
+                      const selectedDate = new Date(selectedDay)
+                      return (
+                        selectedDate.toDateString() === showDate.toDateString()
+                      )
+                    })
+                    .sort((a, b) => {
+                      const timeA = new Date('1970-01-01T' + a.schedule)
+                      const timeB = new Date('1970-01-01T' + b.schedule)
+                      return timeA - timeB
+                    })
+                    .map((show, index) => (
+                      <div className='function' key={index}>
+                        <p className='hour'>{show.schedule} hrs.</p>
+                        <button className="buyButton" onClick={() => window.open(show.link_to_show, '_blank')}>Comprar</button>
+                      </div>
+                    ))}
+                </div>
+              </div>
+              <br />
+              <button className='backButton' onClick={handleBackButton}>
+                Volver
+              </button>
+            </div>
+          </div></>
           )
         : (
-        <p>No hay datos disponibles</p>
+        <div className='loading'>
+          <Spinner small={false} />
+        </div>
           )}
-      <div className='otherInformation'>
-        <div className='functionsInformation'>
-          {cinema.length > 0
-            ? (
-            <h1>{cinema[0].name}</h1>
-              )
-            : (
-            <p></p>
-              )}
-        <div className='tableContainer'>
-          <div className='daysContainer'>
-            {diasUnicos.map((dia, index) => (
-              <span
-                key={index}
-                className={`day ${selectedDay && dia.getTime() === selectedDay.getTime() ? 'selectedText' : ''}`}
-                onClick={() => setSelectedDay(dia)}
-              >
-                  {getNameDay(dia)}<br />
-                  {getNumberDay(dia)} de {getMonth(dia)}
-              </span>
-            ))}
-          </div>
-          <div className='functionsContainer'>
-          {shows
-            .filter(show => {
-              const showDate = new Date(show.schedule)
-              return selectedDay && showDate.toLocaleDateString() === selectedDay.toLocaleDateString()
-            })
-            .map((show, index) => (
-              <div className='function' key={index}>
-                <p className='hour'>{new Date(show.schedule).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })} hrs.</p>
-                <button className="buyButton" onClick={() => window.open(show.link_to_show, '_blank')}>Comprar</button>
-              </div>
-            ))}
-          </div>
-        </div>
-        <br/>
-          <button className='backButton'>
-            Volver
-          </button>
-        </div>
-    </div>
   </div>
   )
 }

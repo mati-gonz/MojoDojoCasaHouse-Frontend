@@ -31,7 +31,7 @@ const NearbyCinemas = () => {
           )}
       {postResponse[0].length > 0
         ? (
-          <SideBarInfo postInfo={postResponse} clickedCinema={clickedCinema} onClickedCinema={setClickedCinema} dateOfMovie={movieDate} />
+          <SideBarInfo postInfo={postResponse} clickedCinema={clickedCinema} onClickedCinema={setClickedCinema} dateOfMovie={movieDate} currentLocation={currentLocation} />
           )
         : (
             null
