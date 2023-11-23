@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import '../assets/styles/views/functions.css'
 
 const Functions = () => {
@@ -9,6 +9,7 @@ const Functions = () => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL
   const location = useLocation()
   const { cinemaId, movieTitle } = location.state
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +20,7 @@ const Functions = () => {
         })
         setShows(response.data.shows)
         setCinema(response.data.cinema)
+        console.log('cinema', response.data.cinema)
       } catch (error) {
         console.error('Error al obtener las funciones', error)
       }
@@ -46,7 +48,9 @@ const Functions = () => {
     new Set(shows.map(show => new Date(show.date).setHours(0, 0, 0, 0)))
   ).map(timestamp => new Date(timestamp))
 
-  console.log('unique', uniqueDays)
+  const handleGoLanding = () => {
+    navigate('/')
+  }
 
   return (
     <div className='functionsLayout'>
@@ -105,8 +109,8 @@ const Functions = () => {
           </div>
         </div>
         <br/>
-          <button className='backButton'>
-            Volver
+          <button className='backButton' onClick={handleGoLanding}>
+            Volver al inicio
           </button>
         </div>
     </div>
