@@ -49,6 +49,10 @@ const Functions = () => {
     new Set(shows.map(show => new Date(show.date).setHours(0, 0, 0, 0)))
   ).map(timestamp => new Date(timestamp))
 
+  if (selectedDay === null && uniqueDays.length > 0) {
+    setSelectedDay(uniqueDays[0])
+  }
+
   const handleBackButton = () => {
     navigate('/nearbyCinemas', {
       state: {
@@ -113,7 +117,7 @@ const Functions = () => {
           )
         : (
         <div className='loading'>
-          <Spinner />
+          <Spinner small={false} />
         </div>
           )}
   </div>

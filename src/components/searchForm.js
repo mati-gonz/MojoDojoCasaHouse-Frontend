@@ -9,6 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import AutoCompleteField from './autocompleteField'
 import es from 'date-fns/locale/es'
 import { useNavigate } from 'react-router-dom'
+import Spinner from './spinner'
 
 const SearchForm = ({ movies }) => {
   const formRef = useRef(null)
@@ -150,7 +151,7 @@ const SearchForm = ({ movies }) => {
                                 <ErrorMessage className='errorStyle' name="date" component='div' />
 
                         <button className='submitButton' disabled={isSubmitting || isGettingLocation || !(isValid && dirty)} type="submit">
-                          {isSubmitting ? 'Buscando...' : isGettingLocation ? 'Obteniendo ubicación...' : 'Buscar funciones'}
+                          {isSubmitting ? <Spinner small={true} /> : isGettingLocation ? 'Obteniendo ubicación...' : 'Buscar funciones'}
                         </button>
                     </Form>
                 )}

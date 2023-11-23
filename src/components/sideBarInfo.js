@@ -95,7 +95,7 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, cu
                 </div>
               </div>
                 )
-              : <Spinner />
+              : <Spinner small={false} />
           )
         : (
           <div className='labelsContainer'>

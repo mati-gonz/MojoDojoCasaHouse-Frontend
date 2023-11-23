@@ -1,9 +1,9 @@
 import '../assets/styles/components/sideBarInfo.css'
 
-function Spinner () {
+function Spinner ({ small }) {
   return (
       <div className="spinner-container">
-        <div className="spinner"></div>
+        <div className={small ? 'smallSpinner' : 'spinner'}></div>
       </div>
   )
 }
