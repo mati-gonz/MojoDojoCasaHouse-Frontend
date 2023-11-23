@@ -1,4 +1,4 @@
-import '../assets/styles/components/sideBarInfo.css'
+import '../assets/styles/components/animations.css'
 
 function Spinner ({ small }) {
   return (
