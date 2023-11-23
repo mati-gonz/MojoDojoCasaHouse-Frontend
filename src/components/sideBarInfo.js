@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import '../assets/styles/components/sideBarInfo.css'
+import { useNavigate } from 'react-router-dom'
 
 const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie }) => {
   const movieName = postInfo[1]
@@ -10,6 +11,8 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie }) 
   const geocoder = new window.google.maps.Geocoder()
   const movieDate = new Date(dateOfMovie)
   const parsedDate = `${movieDate.getDate()}/${movieDate.getMonth()}/${movieDate.getFullYear()}`
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     Promise.all(
@@ -57,6 +60,15 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie }) 
     )
   }
 
+  const handleMoreInformationClick = () => {
+    navigate('/movieInfo', {
+      state: {
+        cinemaId: cinemaData.cinema.id,
+        movieTitle: movieName
+      }
+    })
+  }
+
   function Spinner () {
     return (
       <div className="spinner-container">
@@ -82,7 +94,7 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie }) 
                 ))}
                 </ul>
                 <div className='buttonsContainer'>
-                  <button className='moreInformationButton'>Más información</button>
+                  <button className='moreInformationButton' onClick={handleMoreInformationClick}>Más información</button>
                   <button className='backButton' onClick={() => onClickedCinema(null)}>Volver</button>
                 </div>
               </div>
