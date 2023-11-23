@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import '../assets/styles/components/sideBarInfo.css'
 import { useNavigate } from 'react-router-dom'
+import Spinner from './spinner'
 
-const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie }) => {
+const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, currentLocation }) => {
   const movieName = postInfo[1]
   const [addresses, setAddresses] = useState([])
   const avalibleCinemas = postInfo[0]
@@ -64,17 +65,12 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie }) 
     navigate('/movieInfo', {
       state: {
         cinemaId: cinemaData.cinema.id,
-        movieTitle: movieName
+        movieTitle: movieName,
+        movieDate: dateOfMovie,
+        currentLocation,
+        postInfo
       }
     })
-  }
-
-  function Spinner () {
-    return (
-      <div className="spinner-container">
-        <div className="spinner"></div>
-      </div>
-    )
   }
 
   return (
