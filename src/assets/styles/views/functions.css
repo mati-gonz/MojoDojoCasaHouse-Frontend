@@ -20,6 +20,11 @@
 
 .movieInformation h1 {
     font-weight: 600;
+    font-size: 2vw;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
 }
 
 .frontPageMovie {
