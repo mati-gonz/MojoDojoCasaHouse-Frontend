@@ -12,6 +12,7 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, cu
   const geocoder = new window.google.maps.Geocoder()
   const movieDate = new Date(dateOfMovie)
   const parsedDate = `${movieDate.getDate()}/${movieDate.getMonth()}/${movieDate.getFullYear()}`
+  const [uniqueShowTimes, setUniqueShowTimes] = useState([])
 
   const navigate = useNavigate()
 
@@ -49,6 +50,21 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, cu
     }
   }, [clickedCinema])
 
+  useEffect(() => {
+    // Asegúrate de que cinemaData.shows está definido y no es nulo
+    if (cinemaData && cinemaData.shows) {
+      // Utiliza el estado anterior para calcular el nuevo estado
+      setUniqueShowTimes(prevUniqueShowTimes => {
+        // Crea un nuevo conjunto con los horarios únicos
+        const newUniqueShowTimes = [...new Set(cinemaData.shows.map((show) => show.schedule))]
+        // Ordena los horarios
+        newUniqueShowTimes.sort((a, b) => new Date(`1970-01-01T${a}`) - new Date(`1970-01-01T${b}`))
+        // Devuelve el nuevo estado
+        return newUniqueShowTimes
+      })
+    }
+  }, [cinemaData])
+
   const CinemaLabel = ({ cinema, index }) => {
     const handleCinemaClick = () => {
       onClickedCinema(cinema)
@@ -79,20 +95,21 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, cu
       <h3>{movieName}</h3>
       {clickedCinema
         ? (
-            cinemaData
+            cinemaData && uniqueShowTimes.length > 0
               ? (
               <div className='selectedCinema'>
                 <h3>{clickedCinema.name}</h3>
                 <img className='moviePicture' src={`${cinemaData.shows[0].link_to_picture}`} />
                 <h4>Horarios para el día {parsedDate}</h4>
                 <ul className='showInfo'>
-                {cinemaData.shows.map((show, index) => (
-                  <li key={index}>{show.schedule}</li>
-                ))}
+                {uniqueShowTimes
+                  .map((showTime, index) => (
+                    <li key={index}>{showTime}</li>
+                  ))}
                 </ul>
                 <div className='buttonsContainer'>
                   <button className='moreInformationButton' onClick={handleMoreInformationClick}>Más información</button>
-                  <button className='backButton' onClick={() => onClickedCinema(null)}>Volver</button>
+                  <button className='sideBarBackButton' onClick={() => onClickedCinema(null)} >Volver</button>
                 </div>
               </div>
                 )
