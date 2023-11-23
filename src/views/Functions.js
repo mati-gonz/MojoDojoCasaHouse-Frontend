@@ -20,7 +20,6 @@ const Functions = () => {
         })
         setShows(response.data.shows)
         setCinema(response.data.cinema)
-        console.log('cinema', response.data.cinema)
       } catch (error) {
         console.error('Error al obtener las funciones', error)
       }
