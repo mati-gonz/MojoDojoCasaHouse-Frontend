@@ -74,6 +74,17 @@
     width: 100%;
     justify-content: space-between;
     background-color: #97bcf9;
+    overflow-x: scroll;
+    cursor: pointer;
+}
+
+.daysContainer::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+.daysContainer::-webkit-scrollbar-thumb {
+    background-color: #c9dbfc;
+    border-radius: 10px;
 }
 
 .functionsContainer {
