@@ -40,28 +40,25 @@
     color: #3f3f3f;
 }
 
-.backButton {
+.sideBarBackButton {
     cursor: pointer;
-    background-color: #c3d5fa;
+    background-color: #b0bdf0;
     padding: 1% 5% 1% 5%;
     border-radius: 10px;
     transition: background-color 0.2s ease-in-out;
-    outline: none;
     border: none;
+    outline: none;
     font-size: 1rem;
     font-weight: bold;
+    color: #3f3f3f;
 }
 
-.backButton:hover {
+.sideBarBackButton:hover {
     background-color: #99bbf7;
 }
 
-.backButton:active {
+.sideBarBackButton:active {
     background-color: #6998f1;
-}
-
-.backButton p {
-    color: #3f3f3f;
 }
 
 .moreInformationButton{
@@ -121,5 +118,5 @@
     display: flex;
     flex-direction: column;
     height: 13vh;
-    flex-wrap: wrap;
+    overflow: auto;
 }
