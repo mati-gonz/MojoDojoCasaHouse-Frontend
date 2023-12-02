@@ -137,7 +137,7 @@ const SearchForm = ({ movies }) => {
                                                 id={ 'date' }
                                                 selected={value}
                                                 onChange={val => setFieldValue('date', val)}
-                                                minDate={new Date()}
+                                                // minDate={new Date()}
                                                 dateFormat='dd/MM/yyyy'
                                                 showPopperArrow={false}
                                                 wrapperClassName="formDateWrapper"
