@@ -1,0 +1,28 @@
+.mapsButton {
+    cursor: pointer;
+    background-color: #6881ec;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 2% 4% 2% 4%;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    align-self: flex-start;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.mapsButton:hover {
+    background-color: #4c5cdf;
+}
+
+.mapsButton:active {
+    background-color: #3d49c5;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+}
