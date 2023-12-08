@@ -1,0 +1,67 @@
+.logInForm{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #eff4fe;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    width: 250%;
+    height: 90vh;
+    margin-top: 15%;
+    border-radius: 15px;
+    transition: all 0.3s ease-in-out;
+    margin-left: -60%;
+}
+
+.submitButton {
+    border-radius: 5px;
+    padding: 1rem 2rem 1rem 2rem;
+    background-color: #6881ec;
+    width: 80%;
+    color: white;
+    cursor: pointer;
+    font-weight: 700;
+    border: none;
+    transition: background-color 0.3s ease-in-out;
+    outline: none;
+    font-size: 1rem;
+    font-family: 'Heebo', sans-serif;
+    font-weight: 600;
+    max-width: 15vw;
+}
+
+.submitButton:hover {
+    background-color: #4c5cdf;
+}
+
+.submitButton:active {
+    background-color: #3d49c5;
+}
+
+.submitButton:disabled {
+    background-color: #c9dbfc;
+    color: #99bbf7;
+    cursor: not-allowed;
+}
+
+.labelText {
+    font-family: 'Heebo', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.inputField {
+    padding: 0.7rem 0.5rem 0.7rem 0.5rem;
+    border-radius: 5px;
+    border: 1px solid;
+    width: 90%;
+    font-size: 1rem;
+    max-width: 20vw;
+    margin: 0.5%;
+}
+
+.errorStyle {
+    color: #f43f5e;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
