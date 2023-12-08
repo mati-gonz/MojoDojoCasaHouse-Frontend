@@ -28,12 +28,14 @@ const LoginForm = ({ setUser }) => {
           className='inputField'
           type="text"
           value={name}
-          onChange={e => setName(e.target.value)}/>
+          onChange={e => setName(e.target.value)}
+          placeholder='username'/>
           <input
           type="password"
           className='inputField'
           value={password}
-          onChange={e => setPassword(e.target.value)}/>
+          onChange={e => setPassword(e.target.value)}
+          placeholder='password'/>
           <button className='submitButton'>Iniciar Sesión</button>
           {error && <p className='errorStyle'>Todos los campos son obligatorios</p>}
         </form>
