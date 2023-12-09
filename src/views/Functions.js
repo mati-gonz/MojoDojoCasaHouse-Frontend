@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import '../assets/styles/views/functions.css'
 import Spinner from '../components/spinner'
+import * as DaysDataController from '../controllers/DaysDataController'
 
 const Functions = () => {
   const [shows, setShows] = useState([])
   const [cinema, setCinema] = useState([])
+  const [selectedDay, setSelectedDay] = useState(null)
   const backendUrl = process.env.REACT_APP_BACKEND_URL
   const location = useLocation()
   const { cinemaId, movieTitle, movieDate, currentLocation, postInfo } = location.state
@@ -27,34 +29,9 @@ const Functions = () => {
     }
     fetchData()
   }, [])
-
-  const getNameDay = (day) => {
-    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
-    return days[day.getDay()]
-  }
-
-  const getNumberDay = (day) => day.getDate()
-
-  const getMonth = (month) => {
-    const months = [
-      'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-      'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
-    ]
-    return months[month.getMonth()]
-  }
-
-  const [selectedDay, setSelectedDay] = useState(null)
-
-  const uniqueDays = Array.from(
-    new Set(shows.map(show => new Date(show.date).setHours(0, 0, 0, 0)))
-  ).map(timestamp => new Date(timestamp))
-
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-
-  const uniqueDaysFiltered = uniqueDays
-    .sort((a, b) => a.getTime() - b.getTime())
-    .filter(day => day >= today)
+  const uniqueDays = DaysDataController.getUniqueDays(shows)
+  const today = DaysDataController.getToday()
+  const uniqueDaysFiltered = DaysDataController.getUniqueDaysFiltered(uniqueDays, today)
 
   if (selectedDay === null && uniqueDaysFiltered.length > 0) {
     setSelectedDay(uniqueDaysFiltered[0])
@@ -90,8 +67,8 @@ const Functions = () => {
                       className={`day ${selectedDay && dia.getTime() === selectedDay.getTime() ? 'selectedText' : ''}`}
                       onClick={() => setSelectedDay(dia)}
                     >
-                      {getNameDay(dia)}<br />
-                      {getNumberDay(dia)} de {getMonth(dia)}
+                      {DaysDataController.getNameDay(dia)}<br />
+                      {DaysDataController.getNumberDay(dia)} de {DaysDataController.getMonth(dia)}
                     </span>
                     ))}
                 </div>
@@ -100,9 +77,7 @@ const Functions = () => {
                     .filter(show => {
                       const showDate = new Date(show.date)
                       const selectedDate = new Date(selectedDay)
-                      return (
-                        selectedDate.toDateString() === showDate.toDateString()
-                      )
+                      return DaysDataController.areDatesEqual(selectedDate, showDate)
                     })
                     .sort((a, b) => {
                       const timeA = new Date('1970-01-01T' + a.schedule)
