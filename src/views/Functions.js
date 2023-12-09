@@ -29,7 +29,7 @@ const Functions = () => {
   }, [])
 
   const getNameDay = (day) => {
-    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
+    const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
     return days[day.getDay()]
   }
 
@@ -102,7 +102,7 @@ const Functions = () => {
                     })
                     .map((show, index) => (
                       <div className='function' key={index}>
-                        <p className='hour'>{show.schedule} hrs.</p>
+                        <p className='hour'>{show.schedule.split(':')[0]}:{show.schedule.split(':')[1]} hrs.</p>
                         <button className="buyButton" onClick={() => window.open(show.link_to_show, '_blank')}>Comprar</button>
                       </div>
                     ))}
