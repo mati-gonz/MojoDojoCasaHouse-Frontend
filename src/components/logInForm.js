@@ -1,21 +1,39 @@
 import '../assets/styles/components/logInForm.css'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const LoginForm = ({ setUser }) => {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(false)
+  const [admin, setAdmin] = useState([])
+
+  useEffect(() => {
+    const fetchAdminUser = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/admin`)
+        setAdmin(response.data)
+        console.log(admin)
+      } catch (error) {
+        console.error('Error al obtener datos del backend:', error)
+      }
+    }
+    fetchAdminUser()
+  }, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    console.log(admin[0].name)
 
     if (name === '' || password === '') {
       setError(true)
-      return
-    }
-    setError(false)
+    } else if (name === admin[0].name || password === admin[0].password) {
+      setError(false)
 
-    setUser([name, password])
+      setUser([name, password])
+    } else {
+      alert('Credenciales Inválidas')
+    }
   }
 
   return (
