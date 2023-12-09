@@ -29,7 +29,7 @@ const Functions = () => {
   }, [])
 
   const getNameDay = (day) => {
-    const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
     return days[day.getDay()]
   }
 
@@ -49,8 +49,15 @@ const Functions = () => {
     new Set(shows.map(show => new Date(show.date).setHours(0, 0, 0, 0)))
   ).map(timestamp => new Date(timestamp))
 
-  if (selectedDay === null && uniqueDays.length > 0) {
-    setSelectedDay(uniqueDays[0])
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  const uniqueDaysFiltered = uniqueDays
+    .sort((a, b) => a.getTime() - b.getTime())
+    .filter(day => day >= today)
+
+  if (selectedDay === null && uniqueDaysFiltered.length > 0) {
+    setSelectedDay(uniqueDaysFiltered[0])
   }
 
   const handleBackButton = () => {
@@ -75,7 +82,7 @@ const Functions = () => {
                 <h1>{cinema.name}</h1>
               <div className='tableContainer'>
                 <div className='daysContainer'>
-                  {uniqueDays
+                  {uniqueDaysFiltered
                     .sort((a, b) => a.getTime() - b.getTime())
                     .map((dia, index) => (
                     <span
