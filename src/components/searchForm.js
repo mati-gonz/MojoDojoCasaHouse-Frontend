@@ -10,6 +10,7 @@ import AutoCompleteField from './autocompleteField'
 import es from 'date-fns/locale/es'
 import { useNavigate } from 'react-router-dom'
 import BounceDots from './BounceDots'
+import MovieAutocomplete from './autocompleteInput'
 
 const SearchForm = ({ movies }) => {
   const formRef = useRef(null)
@@ -116,15 +117,16 @@ const SearchForm = ({ movies }) => {
                         </label>
 
                         <label className='labelText'>¿Qué película quieres ver?</label>
-                        <Field className='selectField' as="select" name="movie">
-                            <option value="">Selecciona una película</option>
-                            {movies.map((movie) => (
-                              <option key={movie} value={movie}>
-                                {movie}
-                              </option>
-                            ))}
+                        <Field name="movie">
+                          {({ field, form }) => (
+                            <MovieAutocomplete
+                              {...field}
+                              movies={movies}
+                              setFieldValue={form.setFieldValue}
+                            />
+                          )}
                         </Field>
-                        <ErrorMessage className='errorStyle' name="movie" component="div"/>
+                        <ErrorMessage className='errorStyle' name="movie" component="div" />
 
                         <label className='labelText' >¿Cuándo quieres ir?</label>
                                 <Field name="date" >
@@ -134,6 +136,7 @@ const SearchForm = ({ movies }) => {
                                       return (
                                             <DatePicker
                                                 {...field}
+                                                placeholderText='Elige una fecha'
                                                 id={ 'date' }
                                                 selected={value}
                                                 onChange={val => setFieldValue('date', val)}
