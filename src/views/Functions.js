@@ -75,7 +75,9 @@ const Functions = () => {
                 <h1>{cinema.name}</h1>
               <div className='tableContainer'>
                 <div className='daysContainer'>
-                  {uniqueDays.map((dia, index) => (
+                  {uniqueDays
+                    .sort((a, b) => a.getTime() - b.getTime())
+                    .map((dia, index) => (
                     <span
                       key={index}
                       className={`day ${selectedDay && dia.getTime() === selectedDay.getTime() ? 'selectedText' : ''}`}
@@ -84,7 +86,7 @@ const Functions = () => {
                       {getNameDay(dia)}<br />
                       {getNumberDay(dia)} de {getMonth(dia)}
                     </span>
-                  ))}
+                    ))}
                 </div>
                 <div className='functionsContainer'>
                   {shows
