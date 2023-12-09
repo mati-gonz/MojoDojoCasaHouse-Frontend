@@ -8,6 +8,7 @@
     margin-right: 2%;
     border-radius: 10px;
     padding: 1% 1% 1% 1%;
+    overflow: auto;
 }
 
 .labelsContainer {
@@ -17,6 +18,7 @@
     width: 100%;
     height: 100%;
     row-gap: 2%;
+    overflow: auto;
 }
 
 .cinemaLabel {
@@ -86,8 +88,9 @@
     display: flex;
     justify-content: flex-start;
     width: 100%;
-    margin-top: 2%;
+    margin-top: 1%;
     column-gap: 3%;
+    margin-bottom: 1%;
 }
 
 .selectedCinema {
@@ -96,12 +99,16 @@
     height: 100%;
 }
 
+.selectedCinema h3 {
+    margin: 2% 0 3% 0;
+}
+
 .selectedCinema h4 {
-    margin-bottom: 2%;
+    margin-bottom: 1%;
 }
 
 .moviePicture {
-    width: 50%;
+    width: 150px;
     border-radius: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     align-self: center;
@@ -118,6 +125,9 @@
 .showInfo {
     display: flex;
     flex-direction: column;
-    height: 13vh;
+    margin-bottom: 2vh;
+    height: 18vh;
+    width: 10vw;
+    min-height: 80px;
     overflow: auto;
 }

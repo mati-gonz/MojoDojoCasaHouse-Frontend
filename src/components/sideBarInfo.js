@@ -7,7 +7,6 @@ import MapsButton from './mapsButton'
 
 const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, currentLocation, currentLocationCenter }) => {
   const movieName = postInfo[1]
-  const [addresses, setAddresses] = useState([])
   const avalibleCinemas = postInfo[0]
   const backendUrl = process.env.REACT_APP_BACKEND_URL
   const geocoder = new window.google.maps.Geocoder()
@@ -19,17 +18,6 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, cu
   const navigate = useNavigate()
 
   useEffect(() => {
-    Promise.all(
-      avalibleCinemas.map((cinema) =>
-        geocoder.geocode({
-          location: {
-            lat: cinema.location.coordinates[0],
-            lng: cinema.location.coordinates[1]
-          }
-        }).then((response) => response.results[0].formatted_address)
-      )
-    ).then(setAddresses)
-
     geocoder.geocode({
       location: {
         lat: currentLocationCenter.lat,
@@ -77,14 +65,14 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, cu
     }
   }, [cinemaData])
 
-  const CinemaLabel = ({ cinema, index }) => {
+  const CinemaLabel = ({ cinema }) => {
     const handleCinemaClick = () => {
       onClickedCinema(cinema)
     }
     return (
       <div className='cinemaLabel' onClick={handleCinemaClick}>
           <h3>{cinema.name}</h3>
-          <p>{addresses[index]}</p>
+          <p>{cinema.address}</p>
       </div>
     )
   }
@@ -115,10 +103,10 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, cu
                 <ul className='showInfo'>
                 {uniqueShowTimes
                   .map((showTime, index) => (
-                    <li key={index}>{showTime}</li>
+                    <li key={index}>{`${showTime.split(':')[0]}:${showTime.split(':')[1]} hrs.`}</li>
                   ))}
                 </ul>
-                <MapsButton originAddress={currentUserAddress} destinationAddress={addresses[avalibleCinemas.indexOf(clickedCinema)]} />
+                <MapsButton originAddress={currentUserAddress} destinationAddress={clickedCinema.address} />
                 <div className='buttonsContainer'>
                   <button className='moreInformationButton' onClick={handleMoreInformationClick}>Más información</button>
                   <button className='sideBarBackButton' onClick={() => onClickedCinema(null)} >Volver</button>
