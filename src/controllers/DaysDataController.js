@@ -1,5 +1,4 @@
 export const getNameDay = (day) => {
-  console.log(day)
   const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
   return days[day.getDay()]
 }
