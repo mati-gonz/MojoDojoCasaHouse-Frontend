@@ -27,7 +27,7 @@ const LoginForm = ({ setUser }) => {
 
     if (name === '' || password === '') {
       setError(true)
-    } else if (name === admin[0].name || password === admin[0].password) {
+    } else if (name === admin[0].name && password === admin[0].password) {
       setError(false)
 
       setUser([name, password])
