@@ -48,23 +48,10 @@
 .inputField {
     padding: 0.7rem 0.5rem 0.7rem 0.5rem;
     border-radius: 5px;
-    border: 1px solid;
+    border: 1px solid #aaa;
     width: 90%;
+    max-width: 220px;
     font-size: 1rem;
-    max-width: 20vw;
-}
-
-.selectField {
-    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-    border-radius: 5px;
-    border: 1px solid;
-    width: 90%;
-    text-align: center;
-    cursor: pointer;
-    font-family: 'Heebo', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    max-width: 20vw;
 }
 
 .errorStyle {
@@ -90,7 +77,7 @@
     cursor: pointer;
     padding: 0.7rem 0.5rem 0.7rem 0.5rem;
     border-radius: 5px;
-    border: 1px solid;
+    border: 1px solid #aaa;
     width: 90%;
     font-size: 1rem;
     text-align: center;

@@ -1,0 +1,76 @@
+/* movieAutocomplete.css */
+.react-autosuggest__container {
+    position: relative;
+  }
+  
+  .react-autosuggest__input {
+    width: 220px;
+    padding: 0.7rem 0.7rem 0.7rem 0.7rem;
+    font-size: 16px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+  }
+  
+  .react-autosuggest__container--open .react-autosuggest__input {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  
+  .react-autosuggest__suggestions-container {
+    display: none;
+    max-height: 200px; /* Ajusta la altura máxima según tus necesidades */
+    overflow-y: auto;
+  }
+  
+  .react-autosuggest__container--open .react-autosuggest__suggestions-container {
+    display: block;
+    position: absolute;
+    top: 51px;
+    width: 240px;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    font-size: 16px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    z-index: 2;
+  }
+  
+  .react-autosuggest__suggestions-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    overflow-y: auto; /* Agrega esta línea para aplicar la barra de desplazamiento solo dentro de la lista */
+  }
+  
+  .react-autosuggest__suggestion {
+    cursor: pointer;
+    padding: 10px 20px;
+  }
+  
+  .react-autosuggest__suggestion:not(:first-child) {
+    border-top: 1px solid #ddd;
+  }
+  
+  .react-autosuggest__suggestion--highlighted {
+    background-color: #3154df;
+    color: #fff;
+  }
+  .react-autosuggest__suggestion--highlighted .highlight {
+    color: #fff;
+  }
+  
+  .suggestion-content {
+    display: flex;
+    align-items: center;
+    background-repeat: no-repeat;
+  }
+  
+  .highlight {
+    color: #3154df;
+    font-weight: bold;
+  }
+  
+  .react-autosuggest__suggestion--focused .highlight {
+    color: #120000;
+  }
+  
