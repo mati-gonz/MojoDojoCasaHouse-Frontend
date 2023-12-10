@@ -51,17 +51,19 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, cu
   }, [clickedCinema])
 
   useEffect(() => {
-    // Asegúrate de que cinemaData.shows está definido y no es nulo
     if (cinemaData && cinemaData.shows) {
-      // Utiliza el estado anterior para calcular el nuevo estado
-      setUniqueShowTimes(prevUniqueShowTimes => {
-        // Crea un nuevo conjunto con los horarios únicos
-        const newUniqueShowTimes = [...new Set(cinemaData.shows.map((show) => show.schedule))]
-        // Ordena los horarios
-        newUniqueShowTimes.sort((a, b) => new Date(`1970-01-01T${a}`) - new Date(`1970-01-01T${b}`))
-        // Devuelve el nuevo estado
-        return newUniqueShowTimes
+      const targetDate = movieDate.toISOString().split('T')[0]
+
+      const showsOnTargetDate = cinemaData.shows.filter((show) => {
+        const showDate = new Date(show.date).toISOString().split('T')[0]
+        return showDate === targetDate
       })
+
+      const newUniqueShowTimes = [...new Set(showsOnTargetDate.map((show) => show.schedule))]
+
+      newUniqueShowTimes.sort((a, b) => new Date(`1970-01-01T${a}`) - new Date(`1970-01-01T${b}`))
+
+      setUniqueShowTimes(newUniqueShowTimes)
     }
   }, [cinemaData])
 
