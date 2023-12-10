@@ -19,7 +19,14 @@ const AutoCompleteField = ({ name, onChange, onBlur, useCurrentLocation, setFiel
       )
       autoCompleteRef.current.addListener('place_changed', async function () {
         const place = await autoCompleteRef.current.getPlace()
-        setFieldValue('location', `Latitude: ${place.geometry.location.lat()}, Longitude: ${place.geometry.location.lng()}`)
+        if (place && place.geometry) {
+          setFieldValue(
+            'location',
+            `Latitude: ${place.geometry.location.lat()}, Longitude: ${place.geometry.location.lng()}`
+          )
+        } else {
+          console.error('Error: No se pudo obtener la ubicación del lugar seleccionado.')
+        }
       })
     }
   }, [inputRef.current])
