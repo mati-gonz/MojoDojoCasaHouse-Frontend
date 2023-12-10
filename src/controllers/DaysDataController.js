@@ -14,9 +14,12 @@ export const getMonth = (month) => {
 }
 
 export const getUniqueDays = (shows) => {
-  const uniqueDatesSet = new Set(shows.map(show => new Date(show.date).toISOString()))
-  const uniqueDatesArray = Array.from(uniqueDatesSet)
-  return uniqueDatesArray
+  return Array.from(
+    new Set(shows.map(show => {
+      const timestamp = new Date(show.date).setHours(0, 0, 0, 0)
+      return timestamp + 86400000
+    }))
+  ).map(timestamp => new Date(timestamp))
 }
 
 export const getToday = () => {
@@ -26,11 +29,9 @@ export const getToday = () => {
 }
 
 export const getUniqueDaysFiltered = (uniqueDays, today) => {
-  const filteredAndSortedDates = uniqueDays
-    .map(uniqueDay => new Date(uniqueDay))
-    .filter(date => date >= today)
-    .sort((a, b) => a - b)
-  return filteredAndSortedDates
+  return uniqueDays
+    .sort((a, b) => a.getTime() - b.getTime())
+    .filter(day => day >= today)
 }
 
 export const areDatesEqual = (date1, date2) => {
