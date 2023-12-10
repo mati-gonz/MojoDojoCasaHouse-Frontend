@@ -13,7 +13,6 @@ const LoginForm = ({ setUser }) => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/admin`)
         setAdmin(response.data)
-        console.log(admin)
       } catch (error) {
         console.error('Error al obtener datos del backend:', error)
       }
@@ -23,7 +22,6 @@ const LoginForm = ({ setUser }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(admin[0].name)
 
     if (name === '' || password === '') {
       setError(true)

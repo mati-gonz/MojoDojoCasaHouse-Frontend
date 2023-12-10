@@ -8,7 +8,8 @@
 {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
+    align-items: center;
     width: 10%;
     height: 100%;
     background-color: #6881ec;
@@ -26,14 +27,13 @@
 .databaseButton
 {
     border-radius: 5px;
-    padding: 1rem 2rem 1rem 2rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
     background-color: #6881ec;
-    width: 100%;
     color: white;
     cursor: pointer;
     font-weight: 700;
-    border: none;
-    transition: background-color 0.3s ease-in-out;
+    border: 1px solid #fff;
+    transition: background-color 0.15s ease-in-out;
     outline: none;
     font-size: 1rem;
     font-family: 'Heebo', sans-serif;
@@ -43,6 +43,7 @@
 .databaseButton:hover
 {
     color: #192152;
+    background-color: #fff;
 }
 
 .DataTable
@@ -53,3 +54,70 @@
     margin-right: auto;
 }
 
+.actionButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1rem 5% 1rem 5%;
+    row-gap: 1rem;
+}
+
+.tableButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1rem 5% 1rem 5%;
+    row-gap: 1rem;
+}
+
+.tableButtons h3 {
+    text-align: center;
+    font-weight: 600;
+    font-family: 'Heebo', sans-serif;
+    color: #fff;
+}
+
+.closeSessionButton {
+    border-radius: 5px;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    background-color: #fff;
+    color: #3d4ac5;
+    cursor: pointer;
+    font-weight: 700;
+    border: 1px solid #3d4ac5;
+    transition: background-color 0.15s ease-in-out;
+    outline: none;
+    font-size: 1rem;
+    font-family: 'Heebo', sans-serif;
+    font-weight: 600;
+}
+
+.scrapperButton {
+    border-radius: 5px;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    background-color: #fff;
+    color: #3d4ac5;
+    cursor: pointer;
+    font-weight: 700;
+    border: 1px solid #3d4ac5;
+    transition: background-color 0.15s ease-in-out;
+    outline: none;
+    font-size: 1rem;
+    font-family: 'Heebo', sans-serif;
+    font-weight: 600;
+}
+
+.closeSessionButton:hover {
+    color: #3d4ac5;
+    background-color: #eff5fe;
+}
+
+.scrapperButton:hover {
+    color: #3d4ac5;
+    background-color: #eff5fe;
+}
+
+.closeSessionButton:active {
+    color: #3d4ac5;
+    background-color: #e1edfe;
+}
