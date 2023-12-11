@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import '../assets/styles/views/functions.css'
 import Spinner from '../components/spinner'
+import * as DaysDataController from '../controllers/DaysDataController'
 
 const Functions = () => {
   const [shows, setShows] = useState([])
   const [cinema, setCinema] = useState([])
+  const [selectedDay, setSelectedDay] = useState(null)
   const backendUrl = process.env.REACT_APP_BACKEND_URL
   const location = useLocation()
   const { cinemaId, movieTitle, movieDate, currentLocation, postInfo } = location.state
@@ -27,30 +29,12 @@ const Functions = () => {
     }
     fetchData()
   }, [])
+  const uniqueDays = DaysDataController.getUniqueDays(shows)
+  const today = DaysDataController.getToday()
+  const uniqueDaysFiltered = DaysDataController.getUniqueDaysFiltered(uniqueDays, today)
 
-  const getNameDay = (day) => {
-    const days = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado']
-    return days[day.getDay()]
-  }
-
-  const getNumberDay = (day) => day.getDate()
-
-  const getMonth = (month) => {
-    const months = [
-      'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-      'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
-    ]
-    return months[month.getMonth()]
-  }
-
-  const [selectedDay, setSelectedDay] = useState(null)
-
-  const uniqueDays = Array.from(
-    new Set(shows.map(show => new Date(show.date).setHours(0, 0, 0, 0)))
-  ).map(timestamp => new Date(timestamp))
-
-  if (selectedDay === null && uniqueDays.length > 0) {
-    setSelectedDay(uniqueDays[0])
+  if (selectedDay === null && uniqueDaysFiltered.length > 0) {
+    setSelectedDay(uniqueDaysFiltered[0])
   }
 
   const handleBackButton = () => {
@@ -75,25 +59,25 @@ const Functions = () => {
                 <h1>{cinema.name}</h1>
               <div className='tableContainer'>
                 <div className='daysContainer'>
-                  {uniqueDays.map((dia, index) => (
+                  {uniqueDaysFiltered
+                    .sort((a, b) => a.getTime() - b.getTime())
+                    .map((dia, index) => (
                     <span
                       key={index}
                       className={`day ${selectedDay && dia.getTime() === selectedDay.getTime() ? 'selectedText' : ''}`}
                       onClick={() => setSelectedDay(dia)}
                     >
-                      {getNameDay(dia)}<br />
-                      {getNumberDay(dia)} de {getMonth(dia)}
+                      {DaysDataController.getNameDay(dia)}<br />
+                      {DaysDataController.getNumberDay(dia)} de {DaysDataController.getMonth(dia)}
                     </span>
-                  ))}
+                    ))}
                 </div>
                 <div className='functionsContainer'>
                   {shows
                     .filter(show => {
                       const showDate = new Date(show.date)
                       const selectedDate = new Date(selectedDay)
-                      return (
-                        selectedDate.toDateString() === showDate.toDateString()
-                      )
+                      return DaysDataController.areDatesEqual(selectedDate, showDate)
                     })
                     .sort((a, b) => {
                       const timeA = new Date('1970-01-01T' + a.schedule)
@@ -102,7 +86,7 @@ const Functions = () => {
                     })
                     .map((show, index) => (
                       <div className='function' key={index}>
-                        <p className='hour'>{show.schedule} hrs.</p>
+                        <p className='hour'>{show.schedule.split(':')[0]}:{show.schedule.split(':')[1]} hrs.</p>
                         <button className="buyButton" onClick={() => window.open(show.link_to_show, '_blank')}>Comprar</button>
                       </div>
                     ))}

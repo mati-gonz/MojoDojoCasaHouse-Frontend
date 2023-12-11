@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^13.2.1",
+    "autosuggest-highlight": "^3.3.4",
     "axios": "^1.6.2",
     "babel-core": "7.0.0-bridge.0",
     "enzyme": "^3.11.0",
@@ -17,10 +18,12 @@
     "formik": "^2.4.5",
     "google-maps-react": "^2.0.6",
     "react": "^18.2.0",
+    "react-autosuggest": "^10.1.0",
     "react-data-table-component": "^7.5.4",
     "react-datepicker": "^4.21.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.18.0",
+    "react-router": "^6.20.1",
+    "react-router-dom": "^6.20.1",
     "react-scripts": "5.0.1",
     "styled-components": "^6.1.1",
     "use-places-autocomplete": "^4.0.1",
@@ -33,7 +36,9 @@
     "test": "react-scripts test --transformIgnorePatterns 'node_modules/ (?!axios)/'",
     "eject": "react-scripts eject",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +64,7 @@
     "@babel/core": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
     "babel-jest": "^29.7.0",
+    "cypress": "^13.6.1",
     "eslint-config-standard": "^17.1.0",
     "eslint-formatter-codeframe": "^7.32.1",
     "eslint-plugin-import": "^2.25.2",

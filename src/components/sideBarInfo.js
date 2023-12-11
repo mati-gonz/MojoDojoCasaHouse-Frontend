@@ -3,30 +3,30 @@ import axios from 'axios'
 import '../assets/styles/components/sideBarInfo.css'
 import { useNavigate } from 'react-router-dom'
 import Spinner from './spinner'
+import MapsButton from './mapsButton'
 
-const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, currentLocation }) => {
+const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, currentLocation, currentLocationCenter }) => {
   const movieName = postInfo[1]
-  const [addresses, setAddresses] = useState([])
   const avalibleCinemas = postInfo[0]
   const backendUrl = process.env.REACT_APP_BACKEND_URL
   const geocoder = new window.google.maps.Geocoder()
   const movieDate = new Date(dateOfMovie)
   const parsedDate = `${movieDate.getDate()}/${movieDate.getMonth()}/${movieDate.getFullYear()}`
+  const [currentUserAddress, setCurrentUserAddress] = useState('')
   const [uniqueShowTimes, setUniqueShowTimes] = useState([])
 
   const navigate = useNavigate()
 
   useEffect(() => {
-    Promise.all(
-      avalibleCinemas.map((cinema) =>
-        geocoder.geocode({
-          location: {
-            lat: cinema.location.coordinates[0],
-            lng: cinema.location.coordinates[1]
-          }
-        }).then((response) => response.results[0].formatted_address)
-      )
-    ).then(setAddresses)
+    geocoder.geocode({
+      location: {
+        lat: currentLocationCenter.lat,
+        lng: currentLocationCenter.lng
+      }
+    })
+      .then((response) => {
+        setCurrentUserAddress(response.results[0].formatted_address)
+      })
   }, [avalibleCinemas])
 
   const [cinemaData, setCinemaData] = useState(null)
@@ -51,28 +51,30 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, cu
   }, [clickedCinema])
 
   useEffect(() => {
-    // Asegúrate de que cinemaData.shows está definido y no es nulo
     if (cinemaData && cinemaData.shows) {
-      // Utiliza el estado anterior para calcular el nuevo estado
-      setUniqueShowTimes(prevUniqueShowTimes => {
-        // Crea un nuevo conjunto con los horarios únicos
-        const newUniqueShowTimes = [...new Set(cinemaData.shows.map((show) => show.schedule))]
-        // Ordena los horarios
-        newUniqueShowTimes.sort((a, b) => new Date(`1970-01-01T${a}`) - new Date(`1970-01-01T${b}`))
-        // Devuelve el nuevo estado
-        return newUniqueShowTimes
+      const targetDate = movieDate.toISOString().split('T')[0]
+
+      const showsOnTargetDate = cinemaData.shows.filter((show) => {
+        const showDate = new Date(show.date).toISOString().split('T')[0]
+        return showDate === targetDate
       })
+
+      const newUniqueShowTimes = [...new Set(showsOnTargetDate.map((show) => show.schedule))]
+
+      newUniqueShowTimes.sort((a, b) => new Date(`1970-01-01T${a}`) - new Date(`1970-01-01T${b}`))
+
+      setUniqueShowTimes(newUniqueShowTimes)
     }
   }, [cinemaData])
 
-  const CinemaLabel = ({ cinema, index }) => {
+  const CinemaLabel = ({ cinema }) => {
     const handleCinemaClick = () => {
       onClickedCinema(cinema)
     }
     return (
       <div className='cinemaLabel' onClick={handleCinemaClick}>
           <h3>{cinema.name}</h3>
-          <p>{addresses[index]}</p>
+          <p>{cinema.address}</p>
       </div>
     )
   }
@@ -91,8 +93,7 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, cu
 
   return (
     <div className='sideBarContainer'>
-      <h2>Cines Disponibles para ver:</h2>
-      <h3>{movieName}</h3>
+      <h3>Cines Disponibles para ver: {movieName} </h3>
       {clickedCinema
         ? (
             cinemaData && uniqueShowTimes.length > 0
@@ -104,9 +105,10 @@ const SideBarInfo = ({ postInfo, clickedCinema, onClickedCinema, dateOfMovie, cu
                 <ul className='showInfo'>
                 {uniqueShowTimes
                   .map((showTime, index) => (
-                    <li key={index}>{showTime}</li>
+                    <li key={index}>{`${showTime.split(':')[0]}:${showTime.split(':')[1]} hrs.`}</li>
                   ))}
                 </ul>
+                <MapsButton originAddress={currentUserAddress} destinationAddress={clickedCinema.address} />
                 <div className='buttonsContainer'>
                   <button className='moreInformationButton' onClick={handleMoreInformationClick}>Más información</button>
                   <button className='sideBarBackButton' onClick={() => onClickedCinema(null)} >Volver</button>

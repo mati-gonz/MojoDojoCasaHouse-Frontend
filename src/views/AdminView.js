@@ -63,6 +63,15 @@ const AdminView = () => {
   const clickShowButton = () => {
     setState(false)
   }
+
+  const handleLogOutButton = async () => {
+    try {
+      window.location.reload()
+    } catch (error) {
+      alert('Error al cerrar sesión')
+    }
+  }
+
   const cinemaProps = {
     name: 'Cinema',
     data: cinemas,
@@ -81,9 +90,15 @@ const AdminView = () => {
   return (
     <div className="landingLayout">
       <div className='databaseButtonContainer'>
-        <button className='databaseButton' onClick={(e) => { clickCinemaButton() }}>cinema</button>
-        <button className='databaseButton' onClick={(e) => { clickShowButton() }}>show</button>
-        <button id='scraperButton' className='databaseButton' onClick={handleScrapeButtonClick} >Correr Scrapper</button>
+        <div className='tableButtons'>
+          <h3>Seleccionar tabla</h3>
+          <button className='databaseButton' onClick={(e) => { clickCinemaButton() }}>Cinemas</button>
+          <button className='databaseButton' onClick={(e) => { clickShowButton() }}>Shows</button>
+        </div>
+        <div className='actionButtons'>
+          <button className='scrapperButton' onClick={handleScrapeButtonClick} >Correr Scrapper</button>
+          <button className='closeSessionButton' onClick={handleLogOutButton} >Cerrar Sesion</button>
+        </div>
       </div>
       <div id="cinema">
         {state

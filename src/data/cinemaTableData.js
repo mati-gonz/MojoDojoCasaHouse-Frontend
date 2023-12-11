@@ -11,6 +11,11 @@ const cinemaTableData = [
     sortable: true
   },
   {
+    name: 'ADDRESS',
+    selector: row => row.address,
+    sortable: true
+  },
+  {
     name: 'LONGITUDE',
     selector: row => row.longitude
   },
