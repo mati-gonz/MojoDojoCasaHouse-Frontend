@@ -13,8 +13,10 @@ describe('Landing Page', () => {
     script.async = true
 
     document.head.appendChild(script)
-    cy.wait(15000)
-    cy.waitForGoogleMaps()
+    cy.intercept({
+      method: 'GET',
+      url: 'https://maps.googleapis.com/maps/api/mapsjs/gen_204?csp_test=true'}).as('googleMaps')
+    cy.wait('@googleMaps', {timeout: 100000}).its('response.statusCode').should('equal', 200)  
   })
 
   it('the h1 contains the correct text', () => {
