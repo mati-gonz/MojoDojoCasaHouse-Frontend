@@ -27,6 +27,11 @@ const Landing = () => {
         <div className='elementsContainers'>
             <h1>PelisCerca</h1>
             <SearchForm movies={movies} />
+            <br/>
+            <p>Eres un&nbsp;
+            <a href='adminView'>administrador</a>
+            ?
+            </p>
         </div>
     </div>
   )
