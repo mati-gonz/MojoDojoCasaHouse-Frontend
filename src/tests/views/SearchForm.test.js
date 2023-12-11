@@ -66,7 +66,7 @@ describe('SearchForm component', () => {
       fireEvent.click(document.getElementById('currentLocation'))
 
       // Select a movie
-      fireEvent.change(document.querySelector('select[name="movie"]'), {
+      fireEvent.change(document.querySelector('input[placeholder="Buscar película"]'), {
         target: { value: 'Película 1' }
       })
 
@@ -74,7 +74,7 @@ describe('SearchForm component', () => {
         target: { value: '31/12/2023' }
       })
 
-      console.log('Date Input Value:', document.querySelector('input[id="date"]').value)
+      // console.log('Date Input Value:', document.querySelector('input[id="date"]').value)
 
       fireEvent.click(document.querySelector('button[type="submit"]'))
     })
