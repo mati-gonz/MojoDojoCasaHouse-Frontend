@@ -10,7 +10,7 @@ export default function RoutesFunction () {
         <Route exact path="/" element={<Landing />} />
         <Route path='/nearbyCinemas' element={<NearbyCinemas />} />
         <Route path="/movieInfo" element={<Functions/>}/>
-        <Route path="/admin" element={<AdminLogin />} />
+        <Route path="/adminView" element={<AdminLogin />} />
         <Route path="*" element={<h1>Not Found</h1>} />
      </Routes>
 
