@@ -3,10 +3,12 @@ import '../assets/styles/views/landing.css'
 import SearchForm from '../components/searchForm'
 import HelpMenu from '../components/helpMenu'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Landing = () => {
   const [movies, setMovies] = useState([])
   const backendUrl = process.env.REACT_APP_BACKEND_URL
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +23,10 @@ const Landing = () => {
     fetchData()
   }, [])
 
+  const handleNavigate = () => {
+    navigate('/adminView')
+  }
+
   return (
     <div className='landingLayout'>
         <HelpMenu />
@@ -28,10 +34,7 @@ const Landing = () => {
             <h1>PelisCerca</h1>
             <SearchForm movies={movies} />
             <br/>
-            <p>Eres un&nbsp;
-            <a href='adminView'>administrador</a>
-            ?
-            </p>
+            <button className='adminButton' onClick={handleNavigate}>Ingreso Administrador</button>
         </div>
     </div>
   )

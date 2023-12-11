@@ -23,6 +23,20 @@
     background-color: #c9dbfc;
 }
 
+.adminButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eff4fe;
+    border:none;
+    outline:none;
+    cursor: pointer;
+}
+
+.adminButton:hover{
+    color: #3498db;
+}
+
 h1 {
     font-family: 'Cabin', sans-serif;
     font-weight: 600;
